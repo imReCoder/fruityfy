@@ -1,19 +1,26 @@
 # What's Fresh & What's Rotten, Offline image classification web app
 
+
 ### Group BDG-4B
+
 
 What's Fresh & What's Rotten is our way to solve problem about fruits classification whether it is rotten or it is fresh (safely can be eaten) using Deep Learning. We do simple CNN to expect some basic performance this simple CNN had in the dataset. Then we improved the model by adding Transfer Learning with ResNet50 as our baseline model.
 
+
 After creating deep learning models, there are several ways to deploy models and how users do it depends largely on their use cases and requirements. One such requirement is the ability to run a model offline in areas where Internet connectivity may be sparse or nonexistent. To do this, one solution is to create native apps for mobile platforms which will package and load a compressed version of their models. 
+
 
 We choose an alternative to satisfy this offline mobile
 requirement by creating a [progressive web application](https://developers.google.com/web/progressive-web-apps/) with our model using React and TensorFlow.js. Progressive web applications (PWAs) give a native app-like feel and can run on most modern web browsers. This makes cross-platform development much easier as the application only has to be developed once in HTML/JavaScript. Furthermore, through the use of [service workers](https://developers.google.com/web/fundamentals/primers/service-workers/), PWAs can provide fully offline functionality.
 
+
 With [TensorFlow.js](https://www.tensorflow.org/js), we can convert our pre-trained TensorFlow or Keras models into JavaScript to be run in the browser through the app!
+
 
 In then end, we will have a cross-platform application where users can classify images selected locally or taken with their device's camera. The app uses TensorFlow.js and a pre-trained model converted to the TensorFlow.js format to provide the inference capabilities. This model is saved locally in the browser using IndexedDB, and a service worker is used to provide offline capabilities.
 
 ![architecture](doc/images/arch-diagram.png)
+
 
 ## Steps To Generate Model 
 
@@ -21,6 +28,7 @@ In then end, we will have a cross-platform application where users can classify 
 2. Install dependency (optional)
 3. [Open notebook in Colab/Jupyter Notebook](#3-notebook)
 4. [Save model](#4-save-model)
+
 
 ### 1. Dataset
 
@@ -32,11 +40,14 @@ This dataset has 10901 training data and 2698 test data divided into 6 classes:
 5. Rotten banana
 6. Rotten orange
 
+
 ### 2. Notebook
 
 You can refer to this [notebook](https://github.com/sanggusti/final_bangkit/blob/master/example_model/Final_Project_Bangkit.ipynb) as baseline implementation with Convolutional Neural Network. You can also refer to improvement of this model in this [link 1](https://github.com/sanggusti/final_bangkit/blob/master/example_model/Fresh_and_Rotten_Fruits_Classi.ipynb), [link 2](https://github.com/sanggusti/final_bangkit/blob/master/example_model/rotten_vs_fresh.ipynb), and improvement with [transfer learning with ResNet50](https://github.com/sanggusti/final_bangkit/blob/master/example_model/transfer_learningv2.ipynb)
 
+
 ### 3. Save model
+
 
 After training, you can save model into Keras hdf5 file by using this command in your notebook:
 ```
