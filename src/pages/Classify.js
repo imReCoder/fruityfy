@@ -409,7 +409,6 @@ export default class Classify extends Component {
                     {(this.state.classified) ? <LoadButton
                       variant="primary"
                       size="lg"
-                      disabled={!this.state.filename}
                       onClick={this.reset}
                       isLoading={this.state.isClassifying}
                       text="Reset"
@@ -457,7 +456,9 @@ export default class Classify extends Component {
               </div>
             </div>
             {/* </Collapse> */}
-            {this.state.predictions.length > 0 ?
+            {this.state.classified &&
+              <div>
+                {this.state.predictions.length > 0 ?
               <div className="classification-results">
                 <h3>Predictions</h3>
                 <canvas ref="canvas" width={CANVAS_SIZE} height={CANVAS_SIZE} />
@@ -483,6 +484,8 @@ export default class Classify extends Component {
                 <h3>
                   <strong>Not an fruit</strong>
                 </h3>
+              </div>
+            }
               </div>
             }
           </Fragment>
