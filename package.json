@@ -1,8 +1,7 @@
 {
-  "name": "tfjs-web-app",
+  "name": "fruitify",
   "version": "0.1.0",
   "private": true,
-  "license": "Apache-2.0",
   "dependencies": {
     "@tensorflow/tfjs": "^1.2.7",
     "bootstrap": "^4.3.1",
@@ -18,6 +17,9 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1"
   },
+  "engines": {
+    "node": "16.13.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "start-dev": "concurrently --kill-others-on-fail \"node server.js\" \"yarn start\"",
@@ -30,18 +32,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  
   "devDependencies": {
     "concurrently": "^4.1.0"
   }
