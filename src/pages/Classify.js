@@ -46,7 +46,8 @@ export default class Classify extends Component {
       modelUpdateAvailable: false,
       showModelUpdateAlert: false,
       showModelUpdateSuccess: false,
-      isDownloadingModel: false
+      isDownloadingModel: false,
+      classified: false
     };
   }
 
@@ -187,11 +188,11 @@ export default class Classify extends Component {
     const logits = this.model.predict(resizedImage);
     const probabilities = await logits.data();
     const preds = await this.getTopKClasses(probabilities, TOPK_PREDICTIONS);
-    console.log('preds are 1: ', preds);
     this.setState({
       predictions: preds,
       isClassifying: false,
-      photoSettingsOpen: !this.state.photoSettingsOpen
+      photoSettingsOpen: !this.state.photoSettingsOpen,
+      classified: true
     });
 
     // Draw thumbnail to UI.
@@ -300,6 +301,15 @@ export default class Classify extends Component {
     }
   }
 
+  reset = () => {
+    this.setState({
+      predictions: [],
+      file: null,
+      filename: null,
+      classified: false
+    });
+  }
+
   render() {
     return (
       <div className="Classify container">
@@ -396,6 +406,15 @@ export default class Classify extends Component {
                     </div>
                   </Tab>
                   <Tab eventKey="localfile" title="Select Image From Local">
+                    {(this.state.classified) ? <LoadButton
+                      variant="primary"
+                      size="lg"
+                      disabled={!this.state.filename}
+                      onClick={this.reset}
+                      isLoading={this.state.isClassifying}
+                      text="Reset"
+                      loadingText="Classifying..."
+                    /> :
                     <Form.Group controlId="file">
                       <Form.Label>Upload your image</Form.Label><br />
                       <Form.Label className="imagelabel">
@@ -407,7 +426,8 @@ export default class Classify extends Component {
                         accept="image/*"
                         className="imagefile" />
                     </Form.Group>
-                    {this.state.file &&
+                    }
+                    {(this.state.file && !this.state.classified) &&
                       <Fragment>
                         <div id="local-image">
                           <Cropper
@@ -437,7 +457,7 @@ export default class Classify extends Component {
               </div>
             </div>
             {/* </Collapse> */}
-            {this.state.predictions.length > 0 &&
+            {this.state.predictions.length > 0 ?
               <div className="classification-results">
                 <h3>Predictions</h3>
                 <canvas ref="canvas" width={CANVAS_SIZE} height={CANVAS_SIZE} />
@@ -446,17 +466,23 @@ export default class Classify extends Component {
                   {this.state.predictions.map((category) => {
                     console.log(category, parseFloat(category.probability));
 
-                    return (parseInt(category.probability) > 30) ||
-                      category.className === 'Fresh Apple' ||
-                      category.className === 'Fresh Orange' ||
-                      category.className === 'Fresh Banana' ? <div>
+                    return (parseInt(category.probability) > 30) ? <div>
                       <p>This most likely <strong>{category.className}</strong> with {category.probability}% probability!</p>
-                      <p>You can eat it safely!</p>
+                      {category.className.includes('Fresh') ? <p>You can eat it safely!</p> : <p>You should not eat it!</p>}
                     </div> : <div>
 
                     </div>;
                   })}
                 </ListGroup>
+              </div> :
+              <div className="classification-results">
+                <h3>Predictions</h3>
+                <canvas ref="canvas" width={CANVAS_SIZE} height={CANVAS_SIZE} />
+                <br />
+                {/* not an fruit */}
+                <h3>
+                  <strong>Not an fruit</strong>
+                </h3>
               </div>
             }
           </Fragment>

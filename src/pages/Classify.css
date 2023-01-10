@@ -19,7 +19,7 @@
 
 .Classify .imagelabel {
   font-size: 16px;
-  color: rgb(255, 255, 255);
+  color: rgb(12, 12, 12);
   font-weight: 500;
   height: 34px;
   padding: 6px 12px;
@@ -102,6 +102,10 @@
 
 .Classify .classification-results {
   margin-top: 18px;
+}
+.Classify .classification-results canvas {
+  border-radius:10px;
+  margin-bottom: 10px;
 }
 
 .Classify .loading-model-text {
