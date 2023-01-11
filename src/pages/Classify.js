@@ -221,11 +221,11 @@ export default class Classify extends Component {
     const logits = this.model.predict(imageData);
     const probabilities = await logits.data();
     const preds = await this.getTopKClasses(probabilities, TOPK_PREDICTIONS);
-    console.log('predictions are ', preds);
     this.setState({
       predictions: preds,
       isClassifying: false,
-      photoSettingsOpen: !this.state.photoSettingsOpen
+      photoSettingsOpen: !this.state.photoSettingsOpen,
+      classified: true
     });
 
     // Draw thumbnail to UI.
